@@ -142,7 +142,8 @@ module RRD
         
         result = [["time"] + ds_names]
         (0..result_lines-1).each do |line|
-          date = start_time + line*step
+          # Fixes the off-by-one error so that the output from this gem matches rrdtool
+          date = start_time + (line + 1)*step
           first = ds_count*line
           last = ds_count*line + ds_count - 1
           result << [date] + values[first..last]
